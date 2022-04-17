@@ -1,0 +1,6 @@
+{
+    "port": 8080,
+    "mongoUri": "mongodb://localhost:27017/travel",
+    "accessSecret": "secret travel",
+    "refreshSecret": "refresh secret travel"
+}
