@@ -7,7 +7,7 @@ const router = express.Router({mergeParams: true})
 
 router.post('/signUp', async (req, res)=>{
     try {
-        const {email, password}= req.body
+        const {email, password} = req.body
         const exitingUser = await User.findOne({email})
 
         if (exitingUser) {
@@ -27,9 +27,7 @@ router.post('/signUp', async (req, res)=>{
 
        const tokens = tokenServices.generate({_id: newUser._id})
        await tokenServices.save(newUser._id, tokens.refreshToken)
-       res.status(201) ({
-        ...tokens, userId: newUser._id
-       })
+       res.status(201).send({...tokens, userId: newUser._id})
     }
     catch(e){
         res.status(500).json({
