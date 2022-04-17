@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
 const Token = require('../models/token')
+
 class TokenService {
 generate(payload){
 const accessToken = jwt.sign(payload, config.get('accessSecret'), {
@@ -25,4 +26,3 @@ return token
 
 module.exports = new TokenService()
 
-module.exports = router

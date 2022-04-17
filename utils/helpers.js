@@ -16,4 +16,3 @@ function getRandomInt(min, max) {
     generateUserData
   }
 
-  module.exports = router
