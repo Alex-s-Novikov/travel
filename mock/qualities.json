@@ -28,5 +28,10 @@
       "_id": "67rdca3eeb7f6fgeed471103",
       "name": "Неуверенный",
       "color": "dark"
+    },
+    {
+      "_id": "67rdca3eeb7f6fgeed471103",
+      "name": "Уверенный",
+      "color": "dark"
     }
   ]
