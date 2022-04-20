@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const { check, validationResult } = require('express-validator')
 const { generateUserData } = require('../utils/helpers')
 const tokenServices = require('../services/token.services')
+const { TokenExpiredError } = require('jsonwebtoken')
 const router = express.Router({ mergeParams: true })
 
 
@@ -106,7 +107,30 @@ router.post('/signInWithPassword', [
 
 
 router.post('/token', async (req, res) => {
+try {
+const {refresh_token: refreshToken} = req.body
+const data = tokenServices.validateRefresh(refreshToken)
+const dbToken = await tokenServices.findToken(refreshToken)
 
+if(!data || !dbToken || data._id !== dbToken?.user?.toString()){
+    return res.status (401).json({
+        message: 'Не авторизован'
+    })
+}
+
+const tokens = await tokenServices.generate({
+    id: data._id
+})
+
+await tokenServices.save(data._id, tokens.refreshToken)
+
+res.status(200).send({ ...tokens, userId: data._id })
+
+} catch (e){
+    res.status (500).json({
+        message: 'На сервере произошла ошибка. Попробуйте позже'
+    })
+}
 })
 
 
